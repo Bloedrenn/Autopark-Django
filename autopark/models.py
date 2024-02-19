@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 from .enums import car_colors, car_categories
 
@@ -6,6 +7,7 @@ from .enums import car_colors, car_categories
 
 
 class Driver(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=50, verbose_name='Имя')
     last_name = models.CharField(max_length=50, verbose_name='Фамилия')
     birthday = models.DateField(verbose_name='Дата рождения')
