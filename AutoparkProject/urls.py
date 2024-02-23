@@ -17,9 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from autopark import urls as autopark_urls
+from drivers import urls as drivers_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(autopark_urls))
+    path('drivers/', include(drivers_urls))
 ]

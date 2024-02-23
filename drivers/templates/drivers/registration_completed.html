@@ -1,0 +1,9 @@
+{% extends "drivers/profile.html" %}
+
+{% block header %}
+<h1>Водитель успешно добавлен</h1>
+{% endblock header %}
+
+{% block driver_info %}
+<p>Логин: {{driver.user.username}}</p>
+{% endblock driver_info %}

@@ -1,3 +1,6 @@
+{% extends "drivers/base.html" %}
+
+{% block content %}
 <h2>Заполните данные водителя:</h2>
 
 <form method="POST">
@@ -6,3 +9,4 @@
     {{driver_form.as_p}}
     <button type="submit">Добавить водителя</button>
 </form>
+{% endblock content %}

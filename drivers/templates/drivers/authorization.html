@@ -1,0 +1,11 @@
+{% extends "drivers/base.html" %}
+
+{% block content %}
+<h2>Введите ваши (водителя) данные:</h2>
+
+<form method="POST">
+{% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Войти</button>
+</form>
+{% endblock content %}
