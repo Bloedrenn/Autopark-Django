@@ -1,0 +1,15 @@
+.cars {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.car {
+    border: 1px solid black;
+    width: 25%;
+    padding: 10px;
+    text-align: center;
+    margin-top: 20px;
+}

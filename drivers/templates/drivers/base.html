@@ -5,6 +5,14 @@
     </head>
 
     <body>
+        {% if user.is_authenticated %}
+            Аккаунт - {{ user.driver }}
+            <a href="{% url 'drivers:log_out' %}">Выйти</a>
+        {% else %}
+            <p><a href="{% url 'drivers:register' %}">Создать аккаунт</a></p>
+            <p><a href="{% url 'drivers:log_in' %}">Войти</a></p>
+        {% endif %}
+
         {% block content %}
         {% endblock content %}
     </body>

@@ -124,7 +124,8 @@ DATE_INPUT_FORMATS = ['%d-%m-%Y', '%d.%m.%Y']
 STATIC_URL = 'static/'
 MEDIA_URL = 'media/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 LOGIN_URL = 'drivers:log_in'

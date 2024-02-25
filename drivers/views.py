@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 from .models import Driver
 from .forms import UserForm, DriverForm
 from AutoparkProject.utils import calculate_age
 from AutoparkProject.settings import LOGIN_REDIRECT_URL
+from employees.models import Car
 
 # Create your views here.
 
@@ -46,14 +47,12 @@ def show_user_info_after_registration(request, driver):
 
 
 def log_in(request):
-    if request.method == 'GET':
-        form = AuthenticationForm()
+    form = AuthenticationForm(data=request.POST or None)
 
+    if request.method == 'GET':
         return render(request, 'drivers/authorization.html', {'title': 'Войти | Водители', 'form': form})
 
     elif request.method == 'POST':
-        form = AuthenticationForm(data=request.POST)
-
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
@@ -66,9 +65,25 @@ def log_in(request):
                 url = request.GET.get('next', LOGIN_REDIRECT_URL)
 
                 return redirect(url)
+            
+
+def log_out(request):
+    logout(request)
+
+    return redirect('drivers:get_main_page')
         
 
 def get_profile(request, pk):
     driver = Driver.objects.get(pk=pk)
 
     return render(request, 'drivers/profile.html', {'driver': driver})
+
+
+def show_available_cars(request):
+    title = 'Машины | Водители'
+
+    available_cars = Car.objects.filter(is_available=True)
+
+    context = {'title': title, 'available_cars': available_cars}
+
+    return render(request, 'drivers/available_cars.html', context)

@@ -1,0 +1,25 @@
+{% extends "drivers/base.html" %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'CSS/drivers/available_cars.css' %}">
+
+    <div class="cars">
+        {% for car in available_cars %}
+            <div class="car">
+                <h3>{{ car.brand }} {{ car.model }}</h3>
+                <p>Цвет: {{ car.color }}</p>
+                <p>Мощность: {{ car.power }}</p>
+                <p>Год: {{ car.year }}</p>
+                
+                {% comment %}
+                {% if car.image %}
+                    <img src="{{ car.image.url }}">
+                {% endif %}
+                {% endcomment %}
+
+                <p>Категория: {{ car.category }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
