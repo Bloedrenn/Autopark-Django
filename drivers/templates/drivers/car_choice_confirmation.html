@@ -1,0 +1,33 @@
+{% extends "drivers/base.html" %}
+
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'CSS/drivers/car_choice_confirmation.css' %}">
+
+    <h2>Подтвердите выбор машины</h2>
+
+    <div class="car">
+        <h3>{{ car.brand }} {{ car.model }}</h3>
+
+        {% if car.image %}
+            <img src="{{ car.image.url }}" height="100px">
+        {% else %}
+            <img src="{% static 'Images/no_image.jpg' %}" height="100px">
+        {% endif %}
+
+        <p>Цвет: {{ car.color }}</p>
+        <p>Мощность: {{ car.power }}</p>
+        <p>Год: {{ car.year }}</p>
+        <p>Категория: {{ car.category }}</p>
+    </div>
+
+    <p>
+        <form method="POST">
+            {% csrf_token %}
+            
+            <button type="submit" name="pk" value="{{ car.id }}">Подтвердить</button>
+            <button type="submit">Отмена</button>
+        </form>
+    </p>
+{% endblock content %}

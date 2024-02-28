@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import get_main_page, register, log_in, log_out, get_profile, show_available_cars
+from .views import get_main_page, register, log_in, log_out, get_profile, show_available_cars, confirm_car_choice
 
 app_name = 'drivers'
 
@@ -12,5 +12,6 @@ urlpatterns = [
     path('log_out/', log_out, name='log_out'),
     path('profile/<int:pk>/', get_profile, name='get_profile'),
     
-    path('cars/', show_available_cars, name='show_available_cars')
+    path('cars/', show_available_cars, name='show_available_cars'),
+    path('car_choice_confirmation/<int:pk>/', confirm_car_choice, name='confirm_car_choice')
 ]

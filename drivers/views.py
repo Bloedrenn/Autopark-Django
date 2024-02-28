@@ -87,3 +87,25 @@ def show_available_cars(request):
     context = {'title': title, 'available_cars': available_cars}
 
     return render(request, 'drivers/available_cars.html', context)
+
+
+def confirm_car_choice(request, pk):
+    if request.method == 'GET':
+        car = Car.objects.get(pk=pk)
+
+        context = {'title': 'Подтверждение выбора машины', 'car': car}
+
+        return render(request, 'drivers/car_choice_confirmation.html', context)
+    
+    elif request.method == 'POST':
+        if request.POST.get('pk'):
+            car = Car.objects.get(pk=request.POST.get('pk'))
+
+            car.is_available = False
+
+            car.save()
+
+            return redirect('drivers:show_available_cars')
+        
+        else:
+            return redirect('drivers:show_available_cars')
