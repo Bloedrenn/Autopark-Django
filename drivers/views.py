@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 
@@ -6,7 +6,7 @@ from .models import Driver
 from .forms import UserForm, DriverForm
 from AutoparkProject.utils import calculate_age
 from AutoparkProject.settings import LOGIN_REDIRECT_URL
-from employees.models import Car
+from employees.models import Car, CarDriverAssignment
 
 # Create your views here.
 
@@ -74,9 +74,16 @@ def log_out(request):
         
 
 def get_profile(request, pk):
-    driver = Driver.objects.get(pk=pk)
+    driver = get_object_or_404(Driver, pk=pk)
 
-    return render(request, 'drivers/profile.html', {'driver': driver})
+    car_driver_assignment = CarDriverAssignment.objects.filter(driver=driver).first()
+
+    if car_driver_assignment is not None:
+        car = car_driver_assignment.car
+    else:
+        car = None
+
+    return render(request, 'drivers/profile.html', {'driver': driver, 'car': car})
 
 
 def show_available_cars(request):
@@ -84,7 +91,9 @@ def show_available_cars(request):
 
     available_cars = Car.objects.filter(is_available=True)
 
-    context = {'title': title, 'available_cars': available_cars}
+    available_cars_count = available_cars.count()
+
+    context = {'title': title, 'available_cars': available_cars, 'available_cars_count': available_cars_count}
 
     return render(request, 'drivers/available_cars.html', context)
 
@@ -104,6 +113,8 @@ def confirm_car_choice(request, pk):
             car.is_available = False
 
             car.save()
+
+            CarDriverAssignment.objects.create(car=car, driver=request.user.driver)
 
             return redirect('drivers:show_available_cars')
         

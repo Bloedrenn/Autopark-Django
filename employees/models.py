@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 from .enums import car_colors, car_categories
+from drivers.models import Driver
 
 # Create your models here.
 
@@ -83,3 +84,14 @@ class Car(models.Model):
 
     def __str__(self):
         return ' '.join([self.brand.name, self.model, str(self.year)])
+
+
+class CarDriverAssignment(models.Model):
+    car = models.OneToOneField(Car, on_delete=models.CASCADE, verbose_name='Машина')
+    driver = models.OneToOneField(Driver, on_delete=models.CASCADE, verbose_name='Водитель')
+
+    class Meta:
+        verbose_name = 'Машина-Водитель'
+        verbose_name_plural = 'Машины-Водители'
+
+        db_table = 'car_driver_assignments'

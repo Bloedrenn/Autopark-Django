@@ -6,6 +6,8 @@
 {% block content %}
     <link rel="stylesheet" href="{% static 'CSS/drivers/available_cars.css' %}">
 
+    <div style="text-align: center; margin-top: 10px;">Количество доступных машин: {{ available_cars_count }}</div>
+
     <div class="cars">
         {% for car in available_cars %}
             <div class="car">

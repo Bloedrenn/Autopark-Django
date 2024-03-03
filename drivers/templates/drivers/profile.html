@@ -10,3 +10,9 @@
 <p>Имя: {{driver.first_name}}</p>
 <p>Фамилия: {{driver.last_name}}</p>
 <p>Возраст: {{driver.age}}</p>
+
+{% if car %}
+    <p>Машина: {{ car }}</p>
+{% else %}
+    <p>Машина: нет (<a href="{% url 'drivers:show_available_cars' %}">Выбрать</a>)</p>
+{% endif %}

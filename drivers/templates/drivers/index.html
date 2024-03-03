@@ -4,7 +4,7 @@
     {% if user.is_authenticated %}
         <h2>Меню</h2>
 
-        <div><a href="">Профиль</a></div>
+        <div><a href="{% url 'drivers:get_profile' pk=user.driver.id %}">Профиль</a></div>
         <div><a href="">Заказы</a></div>
         <div><a href="{% url 'drivers:show_available_cars' %}">Машины</a></div>
     {% endif %}
