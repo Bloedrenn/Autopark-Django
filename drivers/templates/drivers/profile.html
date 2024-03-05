@@ -1,18 +1,38 @@
-{% block header %}
-{% endblock header %}
+{% extends "drivers/base.html" %}
 
-<h2>Информация о водителе:</h2>
+{% block content %}
+    {% block header %}
+    {% endblock header %}
+
+    <h2>Информация о водителе:</h2>
 
 
-{% block driver_info %}
-{% endblock driver_info %}
+    {% block driver_info %}
+    {% endblock driver_info %}
 
-<p>Имя: {{driver.first_name}}</p>
-<p>Фамилия: {{driver.last_name}}</p>
-<p>Возраст: {{driver.age}}</p>
+    <p>Имя: {{driver.first_name}}</p>
+    <p>Фамилия: {{driver.last_name}}</p>
+    <p>Возраст: {{driver.age}}</p>
 
-{% if car %}
-    <p>Машина: {{ car }}</p>
-{% else %}
-    <p>Машина: нет (<a href="{% url 'drivers:show_available_cars' %}">Выбрать</a>)</p>
-{% endif %}
+    <p>
+        Доступен:
+
+        {% if driver.is_available %}
+            да
+        {% else %}
+            нет
+        {% endif %}
+    </p>
+
+    {% if car %}
+        <p>Машина: {{ car }}</p>
+
+        <div>
+            <a href="{% url 'drivers:show_available_cars' %}">Сменить машину</a>
+            <br>
+            <a href="{% url 'drivers:give_up_car' %}">Отказаться от машины</a>
+        </div>
+    {% else %}
+        <p>Машина: нет (<a href="{% url 'drivers:show_available_cars' %}">Выбрать</a>)</p>
+    {% endif %}
+{% endblock content %}

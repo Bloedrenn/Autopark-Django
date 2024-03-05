@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 from .models import Driver
 from .forms import UserForm, DriverForm
@@ -73,6 +74,7 @@ def log_out(request):
     return redirect('drivers:get_main_page')
         
 
+@login_required
 def get_profile(request, pk):
     driver = get_object_or_404(Driver, pk=pk)
 
@@ -86,6 +88,7 @@ def get_profile(request, pk):
     return render(request, 'drivers/profile.html', {'driver': driver, 'car': car})
 
 
+@login_required
 def show_available_cars(request):
     title = 'Машины | Водители'
 
@@ -108,15 +111,42 @@ def confirm_car_choice(request, pk):
     
     elif request.method == 'POST':
         if request.POST.get('pk'):
+            driver = Driver.objects.get(user=request.user)
+            
+            if driver.cardriverassignment:
+                driver.cardriverassignment.car.is_available = True
+                driver.cardriverassignment.car.save()
+
+                driver.cardriverassignment.delete()
+
             car = Car.objects.get(pk=request.POST.get('pk'))
 
             car.is_available = False
 
             car.save()
 
-            CarDriverAssignment.objects.create(car=car, driver=request.user.driver)
+            CarDriverAssignment.objects.create(car=car, driver=driver)
 
             return redirect('drivers:show_available_cars')
         
         else:
             return redirect('drivers:show_available_cars')
+        
+
+def give_up_car(request):
+    if request.method == 'GET':
+        return render(request, 'drivers/car_giving_up_confirmation.html')
+    
+    elif request.method == 'POST':
+        driver = Driver.objects.get(user=request.user)
+
+        if 'confirm' in request.POST:
+            driver.cardriverassignment.car.is_available = True
+            driver.cardriverassignment.car.save()
+
+            driver.cardriverassignment.delete()
+
+            return redirect('drivers:get_profile', pk=driver.id)
+
+        if 'cancel' in request.POST:
+            return redirect('drivers:get_profile', pk=driver.id)
