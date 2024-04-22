@@ -95,3 +95,6 @@ class CarDriverAssignment(models.Model):
         verbose_name_plural = 'Машины-Водители'
 
         db_table = 'car_driver_assignments'
+
+    def __str__(self):
+        return ' - '.join([self.car.__str__(), self.driver.__str__()])

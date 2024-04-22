@@ -113,12 +113,15 @@ def confirm_car_choice(request, pk):
         if request.POST.get('pk'):
             driver = Driver.objects.get(user=request.user)
             
-            if driver.cardriverassignment:
+            try:
                 driver.cardriverassignment.car.is_available = True
                 driver.cardriverassignment.car.save()
 
                 driver.cardriverassignment.delete()
-
+                
+            except:
+                pass
+            
             car = Car.objects.get(pk=request.POST.get('pk'))
 
             car.is_available = False
