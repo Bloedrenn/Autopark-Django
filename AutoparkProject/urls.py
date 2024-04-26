@@ -20,10 +20,12 @@ from django.conf.urls.static import static
 
 from .settings import DEBUG, MEDIA_URL, MEDIA_ROOT
 from drivers import urls as drivers_urls
+from clients import urls as clients_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('drivers/', include(drivers_urls))
+    path('drivers/', include(drivers_urls)),
+    path('clients/', include(clients_urls))
 ]
 
 if DEBUG:

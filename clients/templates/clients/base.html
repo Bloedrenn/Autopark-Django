@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{title}}</title>
+    </head>
+
+    <body>
+        {% comment %} {% if user.is_authenticated %}
+            Аккаунт - {{  }}
+            <a href="{% url  %}">Выйти</a>
+        {% else %}
+            <p><a href="{% url  %}">Создать аккаунт</a></p>
+            <p><a href="{% url  %}">Войти</a></p>
+        {% endif %} {% endcomment %}
+
+        {% block content %}
+        {% endblock content %}
+    </body>
+</html>

@@ -1,0 +1,9 @@
+{% extends "clients/profile.html" %}
+
+{% block header %}
+<h1>Клиент успешно добавлен</h1>
+{% endblock header %}
+
+{% block client_info %}
+<p>Логин: {{client.user.username}}</p>
+{% endblock client_info %}

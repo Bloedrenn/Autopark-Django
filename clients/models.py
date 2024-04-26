@@ -1,15 +1,15 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
 
 class Client(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=50, verbose_name='Имя')
     last_name = models.CharField(max_length=50, verbose_name='Фамилия')
     birthday = models.DateField(verbose_name='Дата рождения')
     age = models.IntegerField(editable=False, verbose_name='Возраст')
-    phone_number = models.CharField(max_length=20, verbose_name='Номер телефона')
-    email = models.EmailField(verbose_name='Электронная почта')
 
     class Meta:
         verbose_name = 'Клиент'

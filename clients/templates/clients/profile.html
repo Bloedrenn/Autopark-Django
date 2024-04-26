@@ -1,0 +1,17 @@
+{% extends "clients/base.html" %}
+
+{% block content %}
+    {% block header %}
+    {% endblock header %}
+
+    <h2>Информация о клиенте:</h2>
+
+
+    {% block client_info %}
+    {% endblock client_info %}
+
+    <p>Имя: {{client.first_name}}</p>
+    <p>Фамилия: {{client.last_name}}</p>
+    <p>Возраст: {{client.age}}</p>
+    <p>Дата рождения: {{client.birthday}}</p>
+{% endblock content %}
