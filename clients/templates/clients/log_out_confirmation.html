@@ -1,0 +1,12 @@
+{% extends "clients/base.html" %}
+
+{% block content %}
+    <h3>Подтвердите выход из аккаунта:</h3>
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        <button type="submit" name="confirm" class="btn btn-primary">Подтвердить</button>
+        <button type="submit" class="btn btn-secondary">Отмена</button>
+    </form>
+{% endblock content %}

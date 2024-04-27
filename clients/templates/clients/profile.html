@@ -13,5 +13,5 @@
     <p>Имя: {{client.first_name}}</p>
     <p>Фамилия: {{client.last_name}}</p>
     <p>Возраст: {{client.age}}</p>
-    <p>Дата рождения: {{client.birthday}}</p>
+    <p>Дата рождения: {{client.birthday|date:'d.m.Y'}}</p>
 {% endblock content %}

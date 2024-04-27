@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView
-from django.views.generic import DetailView
+from django.views.generic import DetailView, TemplateView
+from django.urls import reverse_lazy
+from django.contrib.auth import logout
 # from django.contrib.auth.forms import AuthenticationForm
 
 from .forms import UserForm, ClientForm, CustomAuthenticationForm
@@ -8,6 +10,10 @@ from .models import Client
 from AutoparkProject.utils import calculate_age
 
 # Create your views here.
+
+
+def get_main_page(request):
+    return render(request, 'clients/index.html', {'title': 'Главная страница | Клиенты'})
 
 
 def register(request):
@@ -48,6 +54,19 @@ class UserLoginView(LoginView):
     template_name = 'clients/authorization.html'
 
     extra_context = {'title': 'Войти | Клиенты'}
+
+    def get_success_url(self):
+        return reverse_lazy('clients:get_main_page')
+
+
+class UserLogoutView(TemplateView):
+    template_name = 'clients/log_out_confirmation.html'
+
+    def post(self, request):
+        if 'confirm' in request.POST:
+            logout(request)
+
+        return redirect('clients:get_main_page')
 
 
 class UserProfileView(DetailView):

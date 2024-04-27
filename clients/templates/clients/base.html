@@ -2,16 +2,28 @@
 <html>
     <head>
         <title>{{title}}</title>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     </head>
 
     <body>
-        {% comment %} {% if user.is_authenticated %}
-            Аккаунт - {{  }}
-            <a href="{% url  %}">Выйти</a>
-        {% else %}
-            <p><a href="{% url  %}">Создать аккаунт</a></p>
-            <p><a href="{% url  %}">Войти</a></p>
-        {% endif %} {% endcomment %}
+        <ul class="nav">
+            {% if user.is_authenticated %}
+                <li>
+                    <a class="nav-link" href="{% url 'clients:get_profile' pk=user.client.id %}">Профиль</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{% url 'clients:log_out' %}">Выйти</a>
+                </li>
+            {% else %}
+                <li>
+                    <a class="nav-link" href="{% url 'clients:register' %}">Создать аккаунт</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{% url 'clients:log_in' %}">Войти</a>
+                </li>
+            {% endif %}
+        </ul>
 
         {% block content %}
         {% endblock content %}
